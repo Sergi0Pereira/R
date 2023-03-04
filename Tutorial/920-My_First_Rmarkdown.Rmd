@@ -1,0 +1,66 @@
+---
+title: "920-My_First_Rmarkdown"
+author: "Sérgio Pereira"
+date: "2023-03-04"
+output: pdf_document
+---
+
+## Setting up my Environment   
+Loading the packages that i will need. In this case 'tidyverse' , 'palmerpenguins' and ggplot2
+
+```{r Packages_Load, echo=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+head(penguins)
+```
+
+<br>
+
+## Visualizations
+
+Next, we will see two graphs that have conclusions about the Palmer Penguins and Hotel Bookings Databases.
+
+But first, the table visualizations.
+
+<br>
+
+# Penguins
+
+## Palmer Penguins Body Mass and Flipper Length
+
+<br>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=penguins, aes(x=flipper_length_mm, y=body_mass_g)) +
+  geom_point(aes(color=species))+
+  labs(title="Palmer Penguins Body Mass and Flipper Length",subtitle = "By Gender and Sex",
+       caption = "Dr. Gorman - 2007-2009")+
+  annotate("text", x=222, y=4100, label="Gentoo males are the largest!",
+           fontface="bold", size=4, color="blue", angle=45)
+```
+
+<br>
+
+# Hotel Bookings
+
+## Comparison of market segments by hotel type for hotel bookings
+
+<br>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+hotel_bookings <- read.csv("C:/Users/tpess/OneDrive/Ambiente de Trabalho/Google Data Analyst Docs/R/Activities/hotel_bookings.csv")
+
+mindate <- min(hotel_bookings$arrival_date_year)
+maxdate <- max(hotel_bookings$arrival_date_year)
+
+ggplot(data = hotel_bookings) +
+  geom_bar(mapping = aes(x = market_segment)) +
+  facet_wrap(~hotel) + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title="Comparison of market segments by hotel type for hotel bookings",
+       subtitle=paste0("Data from: ", mindate, " to ", maxdate),
+       x="Market Segment",
+       y="Number of Bookings")
+```
